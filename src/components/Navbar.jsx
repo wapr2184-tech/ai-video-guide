@@ -14,6 +14,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const goToTop = () => {
+    setIsMenuOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/");
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const scrollToSection = (sectionId) => {
     setIsMenuOpen(false);
     if (location.pathname !== "/") {
@@ -33,25 +42,25 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
+          <button onClick={goToTop} className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <Zap size={16} className="text-white" />
             </div>
             <span className="font-bold text-lg text-white">
               AI<span className="gradient-text">Video</span>Guide
             </span>
-          </Link>
+          </button>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            <Link
-              to="/"
+            <button
+              onClick={goToTop}
               className={`text-sm font-medium transition-colors hover:text-violet-400 ${
                 location.pathname === "/" ? "text-violet-400" : "text-gray-300"
               }`}
             >
               Inicio
-            </Link>
+            </button>
             <button
               onClick={() => scrollToSection("tabla")}
               className="text-sm font-medium text-gray-300 hover:text-violet-400 transition-colors"
@@ -88,13 +97,12 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden bg-gray-950/95 backdrop-blur-lg border-t border-white/10">
           <div className="px-4 py-4 flex flex-col gap-3">
-            <Link
-              to="/"
-              className="text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
-              onClick={() => setIsMenuOpen(false)}
+            <button
+              onClick={goToTop}
+              className="text-left text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
             >
               Inicio
-            </Link>
+            </button>
             <button
               onClick={() => scrollToSection("tabla")}
               className="text-left text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
