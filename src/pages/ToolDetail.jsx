@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { aiTools } from "../data/aiTools";
+import ToolLogo from "../components/ToolLogo";
 import {
   ArrowLeft, Star, ExternalLink, Check, X, Lightbulb, BookOpen,
   Zap, Users, Target, BarChart3, DollarSign, Info, ChevronRight
@@ -58,11 +59,7 @@ export default function ToolDetail() {
           </button>
 
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <div
-              className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-5xl shadow-2xl`}
-            >
-              {tool.logo}
-            </div>
+            <ToolLogo tool={tool} sizeClass="w-20 h-20" textSize="text-5xl" />
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <span className={`text-xs px-2 py-1 rounded-lg border ${diff.color} ${diff.bg}`}>
@@ -372,7 +369,7 @@ export default function ToolDetail() {
                 className="card-glass p-4 cursor-pointer hover:bg-white/8 transition-all group"
               >
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">{t.logo}</span>
+                  <ToolLogo tool={t} sizeClass="w-10 h-10" textSize="text-xl" />
                   <div>
                     <p className="font-semibold text-white text-sm">{t.name}</p>
                     <div className="flex items-center gap-1">

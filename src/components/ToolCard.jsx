@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Star, ExternalLink, ArrowRight, Users, Zap } from "lucide-react";
+import ToolLogo from "./ToolLogo";
 
 const difficultyConfig = {
   Principiante: { color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },
@@ -31,9 +32,7 @@ export default function ToolCard({ tool, delay = 0 }) {
         {/* Top row */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-2xl shadow-lg`}>
-              {tool.logo}
-            </div>
+            <ToolLogo tool={tool} />
             <div>
               <h3 className="font-bold text-white text-lg leading-tight">{tool.name}</h3>
               <div className="flex items-center gap-1.5 mt-0.5">

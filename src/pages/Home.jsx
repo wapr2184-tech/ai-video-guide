@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import ComparisonTable from "../components/ComparisonTable";
 import ToolCard from "../components/ToolCard";
 import { aiTools } from "../data/aiTools";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BookOpen, Zap, Star, TrendingUp, Play, ArrowRight } from "lucide-react";
 
 const topRated = [...aiTools].sort((a, b) => b.rating - a.rating).slice(0, 6);
@@ -10,6 +11,17 @@ const forBeginners = aiTools.filter((t) => t.difficulty === "Principiante").slic
 
 export default function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const sectionId = location.state.scrollTo;
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [location.state]);
 
   return (
     <div>

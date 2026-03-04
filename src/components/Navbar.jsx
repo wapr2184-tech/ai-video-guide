@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Zap } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -13,11 +14,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { to: "/", label: "Inicio" },
-    { to: "/#tabla", label: "Comparativa" },
-    { to: "/ruta-aprendizaje", label: "Ruta de Aprendizaje" },
-  ];
+  const scrollToSection = (sectionId) => {
+    setIsMenuOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: sectionId } });
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav
@@ -39,23 +44,34 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.to}
-                href={link.to}
-                className={`text-sm font-medium transition-colors hover:text-violet-400 ${
-                  location.pathname === link.to ? "text-violet-400" : "text-gray-300"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href="/#tabla"
+            <Link
+              to="/"
+              className={`text-sm font-medium transition-colors hover:text-violet-400 ${
+                location.pathname === "/" ? "text-violet-400" : "text-gray-300"
+              }`}
+            >
+              Inicio
+            </Link>
+            <button
+              onClick={() => scrollToSection("tabla")}
+              className="text-sm font-medium text-gray-300 hover:text-violet-400 transition-colors"
+            >
+              Comparativa
+            </button>
+            <Link
+              to="/ruta-aprendizaje"
+              className={`text-sm font-medium transition-colors hover:text-violet-400 ${
+                location.pathname === "/ruta-aprendizaje" ? "text-violet-400" : "text-gray-300"
+              }`}
+            >
+              Ruta de Aprendizaje
+            </Link>
+            <button
+              onClick={() => scrollToSection("herramientas")}
               className="btn-primary text-sm py-2 px-4"
             >
               Ver Herramientas
-            </a>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -72,19 +88,32 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden bg-gray-950/95 backdrop-blur-lg border-t border-white/10">
           <div className="px-4 py-4 flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.to}
-                href={link.to}
-                className="text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
-            <a href="/#tabla" className="btn-primary text-sm py-2 text-center mt-2">
+            <Link
+              to="/"
+              className="text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Inicio
+            </Link>
+            <button
+              onClick={() => scrollToSection("tabla")}
+              className="text-left text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
+            >
+              Comparativa
+            </button>
+            <Link
+              to="/ruta-aprendizaje"
+              className="text-gray-300 hover:text-violet-400 transition-colors py-2 text-sm font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Ruta de Aprendizaje
+            </Link>
+            <button
+              onClick={() => scrollToSection("herramientas")}
+              className="btn-primary text-sm py-2 text-center mt-2"
+            >
               Ver Herramientas
-            </a>
+            </button>
           </div>
         </div>
       )}

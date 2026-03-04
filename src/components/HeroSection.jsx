@@ -1,6 +1,12 @@
+import { Link } from "react-router-dom";
 import { ArrowDown, Sparkles, Play, Star } from "lucide-react";
 
 export default function HeroSection() {
+  const scrollToTable = () => {
+    const el = document.getElementById("tabla");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden animated-gradient-bg hero-gradient">
       {/* Animated background particles */}
@@ -28,7 +34,7 @@ export default function HeroSection() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 rounded-full px-4 py-2 mb-8 animate-fade-in-up">
           <Sparkles size={14} className="text-violet-400" />
-          <span className="text-sm text-violet-300 font-medium">14 IAs de Edición de Video Analizadas</span>
+          <span className="text-sm text-violet-300 font-medium">18 IAs de Edición de Video Analizadas</span>
           <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
         </div>
 
@@ -49,7 +55,7 @@ export default function HeroSection() {
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-6 mb-10 animate-fade-in-up animate-delay-300">
           {[
-            { value: "14", label: "IAs Analizadas" },
+            { value: "18", label: "IAs Analizadas" },
             { value: "100%", label: "Actualizado 2025" },
             { value: "500+", label: "Usuarios Aprenden" },
             { value: "5", label: "Niveles de Aprendizaje" },
@@ -63,21 +69,27 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in-up animate-delay-400">
-          <a href="#tabla" className="btn-primary flex items-center justify-center gap-2 text-base py-3 px-8">
+          <button
+            onClick={scrollToTable}
+            className="btn-primary flex items-center justify-center gap-2 text-base py-3 px-8"
+          >
             <Play size={18} />
             Explorar Herramientas
-          </a>
-          <a href="/ruta-aprendizaje" className="btn-secondary flex items-center justify-center gap-2 text-base py-3 px-8">
+          </button>
+          <Link
+            to="/ruta-aprendizaje"
+            className="btn-secondary flex items-center justify-center gap-2 text-base py-3 px-8"
+          >
             <Star size={18} />
             Ruta de Aprendizaje
-          </a>
+          </Link>
         </div>
 
         {/* Featured tools preview */}
         <div className="animate-fade-in-up animate-delay-500">
           <p className="text-xs text-gray-500 mb-4 uppercase tracking-widest">Herramientas incluidas</p>
           <div className="flex flex-wrap justify-center gap-3">
-            {["🎬 Runway ML", "⚡ Pika Labs", "🌀 Sora", "🧑‍💼 HeyGen", "✂️ CapCut", "💫 Luma AI", "🐉 Kling AI", "🎭 Synthesia"].map((tool) => (
+            {["🎬 Runway ML", "⚡ Pika Labs", "🌀 Sora", "🧑‍💼 HeyGen", "✂️ CapCut", "💫 Luma AI", "🐉 Kling AI", "🌱 Seedance", "🎞️ Google Flow"].map((tool) => (
               <span
                 key={tool}
                 className="bg-white/5 border border-white/10 rounded-full px-3 py-1 text-sm text-gray-300 hover:bg-white/10 transition-colors cursor-default"
